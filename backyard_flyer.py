@@ -59,11 +59,11 @@ class BackyardFlyer(Drone):
         """
         if not self.in_mission:
             return
-        if self.flight_phase == Phases.MANUAL:
+        if self.flight_phase == States.MANUAL:
             self.arming_transition()
-        elif self.flight_phase == Phases.ARMING:
+        elif self.flight_phase == States.ARMING:
             self.takeoff_transition()
-        elif self.flight_phase == Phases.DISARMING:
+        elif self.flight_phase == States.DISARMING:
             self.manual_transition()
 
     def calculate_box(self):

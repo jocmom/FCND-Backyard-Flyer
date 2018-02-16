@@ -57,7 +57,14 @@ class BackyardFlyer(Drone):
 
         This triggers when `MsgID.STATE` is received and self.armed and self.guided contain new data
         """
-        pass
+        if not self.in_mission:
+            return
+        if self.flight_phase == Phases.MANUAL:
+            self.arming_transition()
+        elif self.flight_phase == Phases.ARMING:
+            self.takeoff_transition()
+        elif self.flight_phase == Phases.DISARMING:
+            self.manual_transition()
 
     def calculate_box(self):
         """TODO: Fill out this method

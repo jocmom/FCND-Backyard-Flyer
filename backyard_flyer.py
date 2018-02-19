@@ -47,7 +47,6 @@ class BackyardFlyer(Drone):
             if altitude > 0.95 * self.target_position[2]:
                 self.waypoint_transition()
 
-
     def velocity_callback(self):
         """
         This triggers when `MsgID.LOCAL_VELOCITY` is received and self.local_velocity contains new data
@@ -130,7 +129,7 @@ class BackyardFlyer(Drone):
         """
         print("disarm transition")
         self.disarm()
-        self.flight_phase = Phases.DISARMING
+        self.flight_phase = States.DISARMING
 
     def manual_transition(self):
         """This method is provided

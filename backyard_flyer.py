@@ -71,25 +71,21 @@ class BackyardFlyer(Drone):
         elif self.flight_state == States.DISARMING:
             self.manual_transition()
 
-    def calculate_box(self):
-        """TODO: Fill out this method
-
+    def calculate_box(self, distance=10.0, altitude=3.0):
+        """
         1. Return waypoints to fly a box
         """
-        d = 10
-        x = self.global_position[0]
-        y = self.global_position[1]
-        z = self.global_position[2]
-        self.all_waypoints.append([x, y + d, z])
-        self.all_waypoints.append([x + d, y + d, z])
-        self.all_waypoints.append([x + d, y, z])
-        self.all_waypoints.append([x, y, z])
+        self.all_waypoints = [[distance, 0.0, altitude],
+                              [distance, distance, altitude], 
+                              [0.0, distance, altitude], 
+                              [0.0, 0.0, altitude]]
         return self.all_waypoints
 
     def is_waypoint_reached(self):
         # check north position
-        if (0.95 * self.local_position[0] < self.target_position[0] < 1.05 * self.local_position[0] and
-                0.95 * self.local_position[1] < self.target_position[1] < 1.05 * self.local_position[1]):
+        print("local x:{0} y:{1}".format(self.local_position[0], self.local_position[1]))
+        print("target x:{0} y:{1}".format(self.target_position[0], self.target_position[1]))
+        if np.linalg.norm(self.target_position[0:2] - self.local_position[0:2]) < 1.0:
             print("Reached waypoint")
             return True
         return False
